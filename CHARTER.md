@@ -1,4 +1,4 @@
-# {{ New Group Name }} {{ New Group Type }} Charter
+# External Debug Security Task Group Charter
 
 ## Guidelines for Drafting a Charter
 
