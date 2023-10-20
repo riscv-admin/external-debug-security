@@ -1,55 +1,13 @@
 # External Debug Security Task Group Charter
 
-## Guidelines for Drafting a Charter
+The growing complexity of modern System-on-Chip (SoC) designs has led to a corresponding increase in the need for effective debugging capabilities. However, the use of debugging functions also introduces potential security vulnerabilities that can be exploited by attackers to gain unauthorized access to sensitive information or perform malicious actions on the system. Modern SoC development consists of several different actors who may not trust each other, resulting in the need to isolate actors’ assets during development and debugging phases. The current RISC-V Debug Support specification grants the external debugger highest privilege in the system, regardless of the privilege level at which the target system is running. It leads to privilege escalation issues when multiple actors are present. For example, the owner of a SoC, who needs to debug their M-mode firmware, may be able to use the external debugger to bypass PMP.L and attack Boot ROM (the SoC creator’s asset). 
 
-This document outlines the process for establishing a new group within RISC-V International. The charter should be developed during the group formation stage and receive approval from the sponsoring commitee. Please refer to the [Chairs Best Practices policy](https://docs.google.com/document/d/1rtXskVd7YyFq74tQ2OrInyM_-OQa228R5UZs5Pm3Vz0/) for comprehensive guidance.
+The mission of the RISC-V External Debug Security Task Group is to define ISA and non ISA extensions to address the above security issues in the current RISC-V Debug Support specification. More specifically, the TG aims to define a mechanism to control (enable/disable) external debug along supervisor domain boundaries, as well as privilege level boundaries (at least along the M and S/HV privilege boundary, but other privilege boundaries may be considered depending on use cases), and also to restrict the privilege of the external debugger so that it honors the target hart’s privilege according to debug policy. It will also consider some temporal isolation boundaries, for example protection of immutable boot code. Additionally, the isolation mechanism will be extended for RISC-V Trace Control Interface Specification, which already defines the mechanism to filter trace per privilege level without providing protection for vicious configuration. The TG will also address this gap to provide required isolation for trace.
 
-### Task Group (TG) Charter:
-A robust TG charter explicitly outlines the group's objectives, particularly how the group intends to address specific gaps identified by the parent Special Interest Group (SIG) or Committee. It should detail a concise set of deliverables.
+The aim of the TG is to define a mechanism generic enough to be applicable to other isolation models as well, for example, WorldGuard and Smmtt.
 
-### Special Interest Group (SIG) Charter:
-Unlike a Committee, a SIG focuses solely on strategizing, identifying gaps, setting priorities, and possibly initiating other SIGs or TGs to address those gaps. An effective SIG charter clarifies the strategic topics to be tackled and delineates its responsibilities, following the guidelines provided here.
+The TG will assume that a system provides a debug authentication module at system level, for example as part of a HW RoT. The authentication mechanism or protocol is currently out of TG’s scope, it may be considered in future iterations. 
 
-NOTE: Remove this instructional section upon completion.
+The TG will develop the written specification, simulator (Spike and/or QEMU), compliance (ACT test) and Sail (model) specification for the RISC-V external debug security extension(s). 
 
----
-
-## Charter Template
-
-### 1. Introduction:
-
-"The {{ New Group Name }} {{ New Group Type }} aims to [INSERT CLEAR, CONCISE OVERALL MISSION STATEMENT IN 2-3 SENTENCES]."
-
-### 2. Definitions: (Optional)
-
-"[TERM 1] refers to [DEFINITION 1]. It is critical because [EXPLAIN SIGNIFICANCE]. [INCLUDE ADDITIONAL TERMS/DEFINITIONS IF REQUIRED]."
-
-### 3. Background:
-
-"[PROVIDE CONTEXT ABOUT THE GROUP'S RELEVANCE AND ANY PERTINENT TECHNOLOGY]."
-
-### 4. Objectives:
-
-"The {{ New Group Name }} {{ New Group Type }} is committed to delivering [SPECIFY DELIVERABLE] with the following attributes:
-
-[ATTRIBUTE 1]
-[ATTRIBUTE 2]
-[ADD MORE AS REQUIRED]"
-
-### 5. Exclusions: (Optional)
-
-"While not currently in scope, the following items may be considered for future iterations:
-
-[FEATURE 1]
-[FEATURE 2]
-[ADD MORE AS REQUIRED]"
-
-### 6. Collaborations:
-
-"To fulfill its objectives, the {{ New Group Name }} {{ New Group Type }} will engage with:
-
-[GROUP NAME 1] [GROUP TYPE 1]
-[GROUP NAME 2] [GROUP TYPE 2]
-[ADDITIONAL GROUPS AS NEEDED]"
-
-NOTE: Ensure to replace all placeholders ({{ }}) with the actual names or information and remove any optional sections that are not applicable to your charter.
+The TG will interface with Runtime Integrity (RTI) SIG, Smmtt TG under RTI SIG and DTPM SIG.
